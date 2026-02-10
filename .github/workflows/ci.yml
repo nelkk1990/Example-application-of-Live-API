@@ -58,4 +58,12 @@ jobs:
       - name: Run tests
         if: steps.detect.outputs.is_py == 'true'
         run: |
-          pytest -q || (echo "pytest failed or not configured" && exit 1)
+          set +e
+          pytest -q
+          code=$?
+          # 5 = no tests collected
+          if [ "$code" = "0" ] || [ "$code" = "5" ]; then
+            exit 0
+          fi
+          echo "pytest failed (exit $code)"
+          exit $code
