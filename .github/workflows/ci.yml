@@ -20,7 +20,7 @@ jobs:
         id: detect
         run: |
           if [ -f package.json ]; then echo "is_node=true" >> $GITHUB_OUTPUT; else echo "is_node=false" >> $GITHUB_OUTPUT; fi
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         if: steps.detect.outputs.is_node == 'true'
         with:
           node-version: 20
